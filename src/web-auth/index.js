@@ -410,8 +410,16 @@ WebAuth.prototype.login = function (options) {
       var errorHash = '#error=' + encodeURI(errorObject.error) + '&error_description=' + encodeURI(errorObject.error_description);
       return windowHelper.redirect(redirectUrl + errorHash);
     }
+    // data.body
+    // {login_ticket: "Sny4Pny9I1wf4xSVYxDnqEnJSR5vvLDF", co_verifier: "fk8WQOAPmbZ8LDlQ7xPlH_xMJ1l8Eofd", co_id: "Q3L1rsKoUXHq"}
     options = objectHelper.blacklist(options, ['username', 'password']);
     var authorizeOptions = objectHelper.merge(options).with({ loginTicket: data.body.login_ticket });
+    var key = [
+      'co/verifier',
+      encodeURIComponent('https://luisrudge-auth0-au.au.auth0.com'),
+      encodeURIComponent(data.body.co_id)
+    ].join('/');
+    window.sessionStorage[key] = data.body.co_verifier;
     _this.authorize(authorizeOptions);
   });
 };
