@@ -28,10 +28,9 @@
         alert(JSON.stringify(error));
       }
       var verifier = sessionStorage.getItem(key);
-      alert(verifier);
       sessionStorage.removeItem(key);
 
-      event.source.postMessage({
+      evt.source.postMessage({
         type: 'co_verifier_response',
         response: {
           verifier: verifier
